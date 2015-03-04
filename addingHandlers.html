@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Promise examples</title>
+    <script src="scripts/jquery-1.9.1.js"></script>
+    <style>
+        body {
+            font-family: Monaco;
+        }
+
+        ul , li{
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+            display: block;
+            padding:5px;
+            border: 1px solid #efefef;
+            margin-bottom: 10px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+
+<ul id="logger">
+
+</ul>
+
+<script>
+    var container = $('#container');
+    var logger = $('#logger');
+    var startTime = new Date().getTime();
+
+    var appendToLog = function(message){
+        logger.append($('<li>'+message+'--'+(new Date().getTime() -  startTime) +'</li>'))
+    }
+
+    appendToLog('timer started');
+
+    var def = $.Deferred();
+    appendToLog('def created')
+
+    setTimeout(function(){
+        appendToLog('def resolved')
+        def.resolve();
+    }, 2000)
+
+    appendToLog('first handler added')
+    def.done(function(){
+        //container.text('handled first done')
+        appendToLog('first handler handled')
+    })
+
+    setTimeout(function(){
+        appendToLog('second handler added')
+        def.done(function(){
+            //container.text('handled second done')
+            appendToLog('second handler handled')
+        })
+    },3000)
+
+
+
+
+</script>
+</body>
+</html>
