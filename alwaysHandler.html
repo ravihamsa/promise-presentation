@@ -16,12 +16,9 @@
 
 
 
-
 <div class="meta">
     meta
 </div>
-
-
 
 
 <div class="data">
@@ -40,40 +37,18 @@
 <script>
     var container = $('#container');
 
+    //parallel calls
+   var loadTemplate = getMePromiseOf('template');
+    loadTemplate.always(function(){
+        container.append('template always <br>')
+    })
 
-
-    var def = $.Deferred();
-    appendToLog('def created')
-
-
-
-
-
-    setTimeout(function(){
-        appendToLog('def resolved')
-        def.resolve();
-    }, 2000)
-
-
-
-
-
-
-    appendToLog('first handler added')
-    def.done(function(){
-        appendToLog('first handler handled')
+    var loadMeta = getMePromiseOf('meta', true);
+    loadMeta.always(function(){
+        container.append('meta always \n')
     })
 
 
-
-
-
-    setTimeout(function(){
-        appendToLog('second handler added')
-        def.done(function(){
-            appendToLog('second handler handled')
-        })
-    },3000)
 
 
 

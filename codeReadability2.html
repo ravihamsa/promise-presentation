@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Promise examples</title>
+    <script src="scripts/jquery-1.9.1.js"></script>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<h1> queued calls</h1>
+
+<div class="template">
+    template
+</div>
+
+
+
+
+<div class="meta">
+    meta
+</div>
+
+
+
+
+<div class="data">
+    data
+</div>
+
+<div id="container">
+
+</div>
+
+
+<ul id="logger">
+
+</ul>
+<script src="scripts/helpers.js"></script>
+
+<script>
+
+
+    //queued calls
+
+    getMePromiseOf('template')
+            .pipe(function(){
+                return getMePromiseOf('meta')
+            })
+            .pipe(function(){
+                return getMePromiseOf('data')
+            })
+            .pipe(function(){
+                appendToContainer('everything loaded render template');
+            })
+
+</script>
+</body>
+</html>
