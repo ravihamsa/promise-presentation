@@ -9,7 +9,6 @@ var appendToLog = function (message, err) {
     el.css({
         'background-color': err ? 'red' : 'aquamarine'
     });
-
     logger.append(el)
 }
 

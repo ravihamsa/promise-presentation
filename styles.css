@@ -21,14 +21,16 @@ ul {
     box-sizing: border-box;
 }
 
-.template, .meta, .data, .tl-tr, .tr-br, .br-bl, .bl-tl {
+.template, .meta, .data, .tl-tr, .tr-br, .br-bl, .bl-tl, .blinker {
     padding: 10px;
     border: 1px solid #ccc;
     text-align: center;
     display: none;
 }
 
-.template.loading, .meta.loading, .data.loading,  .tl-tr.loading, .tr-br.loading, .br-bl.loading, .bl-tl.loading {
+
+
+.template.loading, .blinker.loading,  .meta.loading, .data.loading,  .tl-tr.loading, .tr-br.loading, .br-bl.loading, .bl-tl.loading {
     display: block;
 }
 

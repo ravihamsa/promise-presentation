@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Start Deferred</title>
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="scripts/jquery-1.9.1.js"></script>
+
+</head>
+<body>
+
+<div class="template">
+    template
+</div>
+
+<div class="meta">
+    meta
+</div>
+
+<div class="data">
+    data
+</div>
+
+
+
+<ul id="logger">
+
+</ul>
+
+<div id="container">
+
+</div>
+
+<script>
+
+    var startTime = new Date().getTime();
+    var logger = $('#logger');
+    var container = $('#container');
+    var appendToLog = function (message, err) {
+        var el = $('<li>' + message + ' @ (' + (new Date().getTime() - startTime) + 'ms)</li>');
+        el.css({
+            'background-color': err ? 'red' : 'aquamarine'
+        });
+        logger.append(el)
+    }
+
+
+    var appendToContainer = function(message){
+        container.append(message);
+        container.append('<br>');
+    }
+
+
+    var getMePromiseOf = function (name, shouldFail) {
+        var el = $('.'+name);
+        var def = $.Deferred();
+        var randomDuration = Math.ceil(Math.random() * 5000);
+        appendToLog('deferred ' + name + ' created with duration  ' + randomDuration + 'ms');
+        el.addClass('loading');
+        setTimeout(function () {
+            if (shouldFail) {
+                appendToLog('deferred ' + name + ' rejected', true);
+                def.reject(name);
+            } else {
+                appendToLog('deferred ' + name + ' resolved');
+                def.resolve(name);
+            }
+            el.removeClass('loading');
+        }, randomDuration)
+
+        return def.promise();
+    }
+
+
+
+    //render template
+
+    getMePromiseOf('template')
+            .pipe(function(){
+                return getMePromiseOf('meta')
+            })
+            .pipe(function(){
+                return getMePromiseOf('data')
+            })
+            .then(function(){}, function(){})
+
+
+
+
+
+/*
+
+    $.when(loadMeta, loadTemplate, loadData).then(function(){
+        console.log(arguments);
+        appendToContainer('all done render template');
+    }, function(){
+        console.log(arguments);
+        appendToContainer('something wrong happened  dont render template');
+    })
+*/
+
+
+
+</script>
+
+
+
+</body>
+</html>
